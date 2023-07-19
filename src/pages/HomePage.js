@@ -9,7 +9,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
-
+import Button from '@mui/material/Button'; 
 
 const HomePage = () => {
 
@@ -28,10 +28,12 @@ const HomePage = () => {
       handleChange(event);
       setSurveykind(event.target.value);
   
-      // Simüle edilen toplam yanıt sayısını güncelle
-      // Burada, gerçek verilere bağlı olarak toplam yanıt sayısını güncelleyebilirsiniz.
-      // Örnek olarak, 10 olarak varsayalım:
       setTotalResponse(10);
+    };
+
+
+    const handleButtonClick = () => {
+     
     };
   return (
     <div>
@@ -97,7 +99,9 @@ const HomePage = () => {
  <Box mt={0} border={1} borderRadius={2} borderTop={0} fontSize={20} color={"#273DB3"} p={2}>  {totalResponse} Total Response</Box> )}
      </div>
      <div className='seetheresult'> 
-     buttonhere
+     <Button variant="contained" color="primary" size="large" onClick={handleButtonClick}>
+     See The Answers Of This Survey
+            </Button>
      </div>
      </div>
        }
