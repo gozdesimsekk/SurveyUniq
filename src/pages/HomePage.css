@@ -35,3 +35,18 @@
     align-items: center;
     margin: 0 auto;
 }
+.surveytypeandresponse{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+#demo-simple-select-label{
+    font-size: 20px;
+    font-weight: 400;
+}
+#demo-simple-select{
+    color: white;
+    font-size: 20px;
+}
