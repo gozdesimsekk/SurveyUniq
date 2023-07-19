@@ -1,0 +1,37 @@
+.welcomediv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+
+    
+}
+.welcometo{
+    font-size: 25px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 0.1em;
+}
+.surveydashtitle{
+    font-size: 25px;
+    font-weight: 600;
+    color: #1E74F6;
+   height: 5%;
+}
+.explaination{
+    width: 70%
+}
+.firstselect{
+    font-size: 18px;
+    font-weight: 400;
+    color: #7189C9
+}
+.surveylocalization{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    align-items: center;
+    margin: 0 auto;
+}
