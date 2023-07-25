@@ -10,13 +10,14 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button'; 
-
+import mockdata from "../mockup/mockup"
 const HomePage = () => {
 
   const [showDiv, setShowDiv] = useState(false);
+  const [showDivques, setShowDivques] = useState(false);
   const [surveykind, setSurveykind] = useState('');
-
-
+  const [question, setQuestion] = useState('');
+ 
   const handleChange = (event) => {
     setSurveykind(event.target.value);
   };
@@ -31,10 +32,30 @@ const HomePage = () => {
       setTotalResponse(10);
     };
 
-
-    const handleButtonClick = () => {
+    const handleDropdownQues = (event) => {
+      
+      setSelectedQuestion(event.target.value);
+  
      
     };
+
+    const [selectedQuestion, setSelectedQuestion] = useState(''); // Başlangıçta seçili öğe yok
+
+    const handleButtonClick = () => {
+     setShowDivques(true)
+    };
+
+    const questionMapping = [
+      { key: 'testExperience', question: 'Uniqgene test kitini deneyimleyip, kişiselleştirilmiş raporunuzu okuduktan sonraki memnuniyetinizi derecelendirebilir misiniz?' },
+      { key: 'interpretationExperience', question: 'Rapor yorumlama görüşmesinden memnun kaldınız mı? Lütfen derecelendirin!' },
+      { key: 'graph', question: 'Raporunuzdaki görebileceğiniz aşağıdaki grafiklerden hangisi size daha faydalı oldu?' },
+      { key: 'training', question: 'Raporunuzun 7. ve 8. sayfalarında bulunan antrenman önerilerinin spor yaparken faydalı olacağını düşünüyor musunuz?' },
+      { key: 'parameterPower', question: 'Hangi genetik parametre ile ilgili sonuçları beğendiniz?' },
+      { key: 'parameterOxygen', question: 'Hangi genetik parametre ile ilgili sonuçları beğendiniz?' },
+      { key: 'parameterInjury', question: 'Hangi genetik parametre ile ilgili sonuçları beğendiniz?' },
+      { key: 'parameterMotor', question: 'Hangi genetik parametre ile ilgili sonuçları beğendiniz?' },
+      { key: 'advice', question: 'Uniqgene\'i çevrenize tavsiye eder misiniz?' },
+    ];
   return (
     <div>
 <div>
@@ -105,7 +126,38 @@ const HomePage = () => {
      </div>
      </div>
        }
+       {showDivques && 
+<div className='questions and answers'>
+<div className='questions'>
+<h4> Questions</h4>
+<Box sx={{ maxWidth: 500 ,backgroundImage: "linear-gradient(45deg, rgba(237, 247, 255, 1)  0%,rgba(39, 53, 179, 1)  100%)", borderRadius: "8px"}}>
+     <FormControl fullWidth>
+  <InputLabel id="demo-simple-select-label">Select the question</InputLabel>
+  <Select
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+    value={selectedQuestion} 
+    onChange={handleDropdownQues}
+  >
+{questionMapping.map(({ key, question }) => (
+              <MenuItem key={key} value={key}>{question}</MenuItem>
+            ))}
+ 
+  </Select>
+</FormControl>
+ </Box>
+ <div className='ssss' style={{ display: "flex",flexDirection:"column", justifyContent: "center", alignItems: "center",padding: "10px",marginTop:"40px", backgroundImage: "url('https://marketplace.canva.com/EAD2962NKnQ/2/0/1600w/canva-rainbow-gradient-pink-and-purple-virtual-background-_Tcjok-d9b4.jpg')" }}> 
+<h4 className='selectedque'> Seçili Soru</h4>
+ {selectedQuestion && <p className='questionexp'> {questionMapping.find(item => item.key === selectedQuestion)?.question}</p>} 
+ 
+ </div>
+</div>
+<div className='answers'> 
+<h4> Answers</h4>
+</div>
 
+</div>
+ }
     </div>
   )
 }
