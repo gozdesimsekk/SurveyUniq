@@ -1,0 +1,43 @@
+.hello{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.title{
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #124694;
+}
+.selecttitles{
+    color : #185DC5;
+    font-size: 20px;
+    font-weight: 600;
+}
+.selectt{
+    outline: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    background:#A5C7FB;
+    min-width: 260px;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    padding: 20px;
+    color: #1E74F6;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.allresponseframework{
+    display: flex;
+
+    justify-content: center;
+    flex-direction: column;
+}
+

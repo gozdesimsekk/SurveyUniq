@@ -1,4 +1,4 @@
-const surveyStatus = 
+export const surveyStatus = 
 [
     {
     "SurveyStatusID": 1, //INT //PRIMARY KEY
@@ -18,7 +18,7 @@ const surveyStatus =
     }
 ]
 
-const surveyInfo = 
+export const surveyInfo = 
 [
     {
         "SurveyID": 1, //INT //PRIMARY KEY
@@ -52,7 +52,7 @@ const surveyInfo =
     }
 ]
 
-const questionType = 
+export const questionType = 
 [
     {
         "QuestionTypeID": 1, //INT //PRIMARY KEY
@@ -72,7 +72,7 @@ const questionType =
     },
 ]
 
-const question = 
+export const question = 
 [
     {
         "QuestionID": 1, //INT //PRIMARY KEY

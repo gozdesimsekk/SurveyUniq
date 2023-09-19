@@ -1,4 +1,4 @@
-const response = [
+export const response = [
     {
         "ResponseID": 1, //INT //PRIMARY KEY
         "RespondentID": 1, //INT //FOREIGN KEY
@@ -10,7 +10,7 @@ const response = [
 ]
 
 // for people whom not tested bu UNIQGENE that has no swabcode
-const nonuniqrespondent = [
+export const nonuniqrespondent = [
     {
         "RespondentID": 1, //INT //PRIMARY KEY
         "Name": "Irmak Ege", //VARCHAR(100)
@@ -19,14 +19,14 @@ const nonuniqrespondent = [
 ]
 
 // for people whom tested bu UNIQGENE that has swabcode
-const uniqrespondent = [
+export const uniqrespondent = [
     {
         "RespondentID": 1, //INT //PRIMARY KEY
         "Code": "123456", //VARCHAR(100) //Swabcodes
     },
 ]
 
-const answer = [
+export const answer = [
     {
         "AnswerID": 1, //INT //PRIMARY KEY
         "ResponseID": 1, //INT //FOREIGN KEY
