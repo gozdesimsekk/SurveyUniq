@@ -93,6 +93,9 @@ const Dashboard = () => {
                 <h2 className='title'> Welcome to Uniqgene Survey Dashboard</h2>
             
                 <h3 className='subtitle'> 🙋🏽‍♀️ You can start seeing the questions and responses by choosing the survey you want. 🧬</h3>
+                <button class="bounce">
+  ALL SURVEY LIST
+</button>
             </div>
 
             <div className='surveyselect' style={{width: "500px"}}>
@@ -108,6 +111,7 @@ const Dashboard = () => {
     }),
   }}
     />
+   
 </div>
 
             {selectedSurvey !== null && (
@@ -177,8 +181,8 @@ const Dashboard = () => {
 
                         <div style={{ marginLeft: '20px' }}>
                             {groupedAnswers && 
-                                <p>
-                                    Toplam Cevap Sayısı: {groupedAnswers.reduce((acc, entry) => acc + entry.count, 0)}
+                                <p className='lengthofanswer'>
+                                    Bu soruya toplam cevap sayısı {groupedAnswers.reduce((acc, entry) => acc + entry.count, 0)}
                                 </p>
                             }
                         </div>
@@ -186,14 +190,16 @@ const Dashboard = () => {
                     
                     {(selectedQuestionType === "Open" || selectedQuestionType === "Short answer") && (
     <div className='answersopenframework'> 
-        <ul>
+        <ul className='listofopen'>
             {answer.filter(a => a.QuestionID === selectedQuestion.QuestionID).map((answer) => (
-                <li key={answer.AnswerID}>
+                <li className='liofopen' key={answer.AnswerID}>
                     {answer.Answer}
                 </li>
             ))}
         </ul>
+        <p className='lengthofanswer'>Bu soruya toplam cevap sayısı {answer.filter(a => a.QuestionID === selectedQuestion.QuestionID).length}</p>
     </div>
+    
 )}
 
     </div>
