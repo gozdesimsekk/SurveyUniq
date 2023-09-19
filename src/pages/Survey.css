@@ -1,14 +1,31 @@
 .hello{
-
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 .title{
     font-size: 28px;
     font-weight: 600;
     text-align: center;
     color: #124694;
+}
+.logotitle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.subtitle{
+    font-size: 22px;
+    font-weight: 400;
+    text-align: center;
+    color: #185DC5;
+
+}
+.website-logo{
+
+    width:80px;
 }
 .selecttitles{
     color : #185DC5;
@@ -40,4 +57,17 @@
     justify-content: center;
     flex-direction: column;
 }
-
+.answersopenframework{
+    display: flex;
+}
+ul {
+    list-style: none;
+  }
+li {
+    font-size: 18px;
+    margin-bottom: 10px;
+    background: url('../assets/right.svg')  left 3px no-repeat;
+    background-size: contain;
+    padding-left: 30px;
+    background-position: 1%;
+  }

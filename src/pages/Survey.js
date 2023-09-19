@@ -4,6 +4,7 @@ import { answer } from '../data/answer';
 import { PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
 import Select from 'react-select'
 import "./Survey.css"
+import logo from "../assets/logo.png"
 
 const Dashboard = () => {
     const [selectedSurvey, setSelectedSurvey] = useState(null);
@@ -55,16 +56,6 @@ const Dashboard = () => {
     
   
 
-    const handleResponseSelect = (response) => {
-        setSelectedResponse(response);
-    };
-
-    const handleBackButtonClick = () => {
-        setSelectedQuestion(null);
-        setSelectedResponse(null);
-        setGroupedAnswers(null);
-    };
-
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 
     const RADIAN = Math.PI / 180;
@@ -89,8 +80,19 @@ const Dashboard = () => {
 
     return (
         <div>
+
+       
+  
             <div className='hello'> 
-                <h2 className='title'> Welcome to Survey Dashboard</h2>
+        
+             <img
+          src= {logo}
+          className="website-logo"
+          alt="website logo"
+        />
+                <h2 className='title'> Welcome to Uniqgene Survey Dashboard</h2>
+            
+                <h3 className='subtitle'> 🙋🏽‍♀️ You can start seeing the questions and responses by choosing the survey you want. 🧬</h3>
             </div>
 
             <div className='surveyselect' style={{width: "500px"}}>
