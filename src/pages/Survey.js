@@ -182,7 +182,7 @@ const Dashboard = () => {
                         <div style={{ marginLeft: '20px' }}>
                             {groupedAnswers && 
                                 <p className='lengthofanswer'>
-                                    Bu soruya toplam cevap sayısı {groupedAnswers.reduce((acc, entry) => acc + entry.count, 0)}
+                                Total number of responses to this question is {groupedAnswers.reduce((acc, entry) => acc + entry.count, 0)}
                                 </p>
                             }
                         </div>
@@ -197,7 +197,7 @@ const Dashboard = () => {
                 </li>
             ))}
         </ul>
-        <p className='lengthofanswer'>Bu soruya toplam cevap sayısı {answer.filter(a => a.QuestionID === selectedQuestion.QuestionID).length}</p>
+        <p className='lengthofanswer'> Total number of responses to this question is{answer.filter(a => a.QuestionID === selectedQuestion.QuestionID).length}</p>
     </div>
     
 )}

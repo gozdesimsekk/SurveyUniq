@@ -6,21 +6,8 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
 }
 body {
-	background: linear-gradient(-45deg, #F2F2F2, #F6F9FF, #A5C7FB, #aecefe);
-	background-size: 400% 400%;
-	animation: gradient 30s ease infinite;
+	background:#F6F9FF;
 	height: 100vh;
   font-family: 'Poppins', sans-serif;
 }
 
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
