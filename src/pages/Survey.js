@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import FileSaver from "file-saver";
 import { surveyInfo, question, questionType } from '../data/question'; 
 import { answer } from '../data/answer';
 import { PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
 import Select from 'react-select'
 import "./Survey.css"
 import logo from "../assets/logo.png"
+import { useCurrentPng } from 'recharts-to-png';
+
 
 const Dashboard = () => {
     const [selectedSurvey, setSelectedSurvey] = useState(null);
@@ -53,12 +56,19 @@ const Dashboard = () => {
         setSelectedResponse(null);
         
     };
-    
-  
+    const [getPiePng, { ref: pieRef }] = useCurrentPng();
+     const handlePieDownload = useCallback(async () => {
+        const png = await getPiePng();
+        if (png) {
+          FileSaver.saveAs(png, "pie-chart.png");
+        }
+      }, [getPiePng]);
+
 
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 
     const RADIAN = Math.PI / 180;
+
     const renderPercentageLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -80,11 +90,7 @@ const Dashboard = () => {
 
     return (
         <div>
-
-       
-  
-            <div className='hello'> 
-        
+            <div className='hello'>        
              <img
           src= {logo}
           className="website-logo"
@@ -93,7 +99,7 @@ const Dashboard = () => {
                 <h2 className='title'> Welcome to Uniqgene Survey Dashboard</h2>
             
                 <h3 className='subtitle'> 🙋🏽‍♀️ You can start seeing the questions and responses by choosing the survey you want. 🧬</h3>
-                <button class="bounce">
+                <button className="bounce">
   ALL SURVEY LIST
 </button>
             </div>
@@ -138,7 +144,10 @@ const Dashboard = () => {
                     <div className='answerswithpieframework'>
                         <h3 className='selecttitles'> Responses of <a style={{color:"#7E00C2"}}> {selectedQuestion.QuestionText} </a></h3>
                         {groupedAnswers && (
-                            <PieChart width={500} height={400}>
+                            <div> 
+                            <button  onClick={handlePieDownload}>Download Chart</button>
+
+                            <PieChart ref={pieRef} width={500} height={400}>
                                 <Pie
                                     dataKey="count"
                                     data={groupedAnswers}
@@ -177,6 +186,7 @@ const Dashboard = () => {
                                     }}
                                 />
                             </PieChart>
+                            </div>
                         )}
 
                         <div style={{ marginLeft: '20px' }}>
@@ -197,7 +207,7 @@ const Dashboard = () => {
                 </li>
             ))}
         </ul>
-        <p className='lengthofanswer'> Total number of responses to this question is{answer.filter(a => a.QuestionID === selectedQuestion.QuestionID).length}</p>
+        <p className='lengthofanswer'> Total number of responses to this question is {answer.filter(a => a.QuestionID === selectedQuestion.QuestionID).length}</p>
     </div>
     
 )}
