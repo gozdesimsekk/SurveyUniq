@@ -1,3 +1,16 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   padding-top: 50px;
+    padding-bottom: 100px;
+    
+}
+.surveyselect{
+    width: 80%;
+    max-width: 600px;
+}
 .hello{
     display: flex;
     align-items: center;
@@ -21,6 +34,7 @@
     font-weight: 400;
     text-align: center;
     color: #185DC5;
+    width: 90%;
 
 }
 .website-logo{
@@ -57,13 +71,29 @@
 }
 .allresponseframework{
     display: flex;
-
+    align-items: center;
     justify-content: center;
     flex-direction: column;
+    width: 80%;
+    max-width: 600px;
 }
 .answersopenframework{
     display: flex;
     flex-direction: column;
+    width: 100%;
+}
+.answerswithpieframework{
+    width: 100%;
+}
+.graph{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-description{
+    text-align: center;
 }
 .listofopen {
     list-style: none;
@@ -96,7 +126,11 @@ font-weight: 600;
     margin:1em 1em;
     text-transform:uppercase;
 }
-
+.recharts-legend-wrapper{
+    width: 50% !important;
+    left: 25% !important;
+    
+}
 .bounce:hover{
     animation:bounce 1s;
       -webkit-animation:bounce 1s;

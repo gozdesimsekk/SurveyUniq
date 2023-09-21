@@ -2,12 +2,12 @@ import React, { useCallback, useState } from 'react';
 import FileSaver from "file-saver";
 import { surveyInfo, question, questionType } from '../data/question'; 
 import { answer } from '../data/answer';
-import { PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
+import { PieChart, Pie, Legend, Tooltip, Cell,ResponsiveContainer } from 'recharts';
 import Select from 'react-select'
 import "./Survey.css"
 import logo from "../assets/logo.png"
 import { useCurrentPng } from 'recharts-to-png';
-
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
     const [selectedSurvey, setSelectedSurvey] = useState(null);
@@ -81,7 +81,7 @@ const Dashboard = () => {
                 fill="darkblue"
                 textAnchor={x > cx ? 'start' : 'end'}
                 dominantBaseline="middle"
-                fontSize={12}
+                fontSize={14}
             >
                 {`${(percent * 100).toFixed(2)}%`}
             </text>
@@ -89,7 +89,7 @@ const Dashboard = () => {
     };
 
     return (
-        <div>
+        <div className='container'>
             <div className='hello'>        
              <img
           src= {logo}
@@ -99,12 +99,14 @@ const Dashboard = () => {
                 <h2 className='title'> Welcome to Uniqgene Survey Dashboard</h2>
             
                 <h3 className='subtitle'> 🙋🏽‍♀️ You can start seeing the questions and responses by choosing the survey you want. 🧬</h3>
-                <button className="bounce">
-  ALL SURVEY LIST
-</button>
+                <Link to="/surveylist">
+      <button className="bounce">
+        ALL SURVEY LIST
+      </button>
+    </Link>
             </div>
 
-            <div className='surveyselect' style={{width: "500px"}}>
+            <div className='surveyselect'>
     <h3 className='selecttitles'>Survey Name</h3>
     <Select 
         options={surveyInfo.map(survey => ({ value: survey, label: survey.Name }))}
@@ -121,7 +123,7 @@ const Dashboard = () => {
 </div>
 
             {selectedSurvey !== null && (
-                <div className='surveyselect' style={{width: "500px"}}>
+                <div className='surveyselect'>
                     <h3 className='selecttitles'>Questions of <a style={{color:"#7E00C2"}}> {selectedSurvey.Name}</a></h3> 
                     <Select 
         options={question
@@ -144,16 +146,16 @@ const Dashboard = () => {
                     <div className='answerswithpieframework'>
                         <h3 className='selecttitles'> Responses of <a style={{color:"#7E00C2"}}> {selectedQuestion.QuestionText} </a></h3>
                         {groupedAnswers && (
-                            <div> 
+                            <div className='graph'> 
                             <button  onClick={handlePieDownload}>Download Chart</button>
-
-                            <PieChart ref={pieRef} width={500} height={400}>
+<ResponsiveContainer width={800} height={400} > 
+                            <PieChart ref={pieRef} >
                                 <Pie
                                     dataKey="count"
                                     data={groupedAnswers}
                                     cx="50%"
                                     cy="50%"
-                                    outerRadius={80}
+                                    outerRadius={120}
                                     fill="#8884d8"
                                     label={renderPercentageLabel} 
                                     labelLine={false}
@@ -167,7 +169,7 @@ const Dashboard = () => {
                                     content={({ active, payload }) => {
                                         if (active && payload && payload.length) {
                                             return (
-                                                <div style={{ backgroundColor: '#fff', border: '1px solid #ccc',borderRadius: '10px', padding: '5px' , fontSize: 14}}>
+                                                <div style={{ backgroundColor: '#fff', border: '1px solid #ccc',borderRadius: '10px', padding: '5px' , fontSize: 12}}>
                                                     <p> {payload[0].payload.answer}</p>
                                                     <p> {payload[0].value} kişi </p>
                                                 </div>
@@ -176,6 +178,7 @@ const Dashboard = () => {
                                     }}
                                 />
                                 <Legend 
+                              layout="horizontal" verticalAlign="bottom" align="center" 
                                     formatter={(value, entry) => {
                                         const { payload } = entry;
                                         return (
@@ -186,10 +189,11 @@ const Dashboard = () => {
                                     }}
                                 />
                             </PieChart>
+                            </ResponsiveContainer>
                             </div>
                         )}
 
-                        <div style={{ marginLeft: '20px' }}>
+                        <div className='chart-description'>
                             {groupedAnswers && 
                                 <p className='lengthofanswer'>
                                 Total number of responses to this question is {groupedAnswers.reduce((acc, entry) => acc + entry.count, 0)}

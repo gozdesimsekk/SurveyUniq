@@ -7,7 +7,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Dashboard/>} />
-        <Route path="/List" element={<SurveyList/>} />
+        <Route path="/surveylist" element={<SurveyList/>} />
       </Routes>
      
     </Router>
