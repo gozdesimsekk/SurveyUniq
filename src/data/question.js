@@ -28,14 +28,7 @@ export const surveyStatus = [
         "SurveyStatusID": 4,
         "SurveyStatus": "Suspended"
     },
-    {
-        "SurveyStatusID": 5,
-        "SurveyStatus": "In Progress"
-    },
-    {
-        "SurveyStatusID": 6,
-        "SurveyStatus": "Completed"
-    }
+ 
 
 ];
 
@@ -111,12 +104,9 @@ export const questionType = [
     },
     {
         "QuestionTypeID": 5,
-        "QuestionType": "Rating Scale"
+        "QuestionType": "Other"
     },
-    {
-        "QuestionTypeID": 6,
-        "QuestionType": "Short Answer"
-    }
+   
 ];
 
 export const question = [

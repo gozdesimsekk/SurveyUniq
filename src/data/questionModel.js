@@ -72,7 +72,7 @@ export const questionType =
     },
     {
         "QuestionTypeID": 5, //INT //PRIMARY KEY
-        "QuestionType": "bisey", //VARCHAR(100)
+        "QuestionType": "Other", //VARCHAR(100)
     },
 ]
 

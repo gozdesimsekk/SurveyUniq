@@ -8,7 +8,7 @@ import "./Survey.css"
 import logo from "../assets/logo.png"
 import { useCurrentPng } from 'recharts-to-png';
 import { Link } from 'react-router-dom';
-
+//Buraya yorumlu soru olduğunda hem seçmelileri hem de yorumları görebileceğimiz bir koşul eklenmeli
 const Dashboard = () => {
     const [selectedSurvey, setSelectedSurvey] = useState(null);
     const [selectedQuestion, setSelectedQuestion] = useState(null);
@@ -30,10 +30,10 @@ const Dashboard = () => {
         console.log('Question Type:', questionTypeValue);
         const filteredAnswers = answer.filter(
             a => a.QuestionID === question.QuestionID &&
-                 (questionTypeValue !== "Open" && questionTypeValue !== "Short answer")
+                 (questionTypeValue !== "Open" )
         );
     
-        if (questionTypeValue !== "Open" && questionTypeValue !== "Short answer") {
+        if (questionTypeValue !== "Open" ) {
             const grouped = {};
             filteredAnswers.forEach(a => {
                 if (grouped[a.Answer]) {
@@ -202,7 +202,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                     
-                    {(selectedQuestionType === "Open" || selectedQuestionType === "Short answer") && (
+                    {(selectedQuestionType === "Open" ) && (
     <div className='answersopenframework'> 
         <ul className='listofopen'>
             {answer.filter(a => a.QuestionID === selectedQuestion.QuestionID).map((answer) => (

@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./SurveyList.css"
 import {BsFillCheckCircleFill, BsHourglassSplit } from 'react-icons/bs';
 import {RxPaperPlane} from 'react-icons/rx';
 import {IoMdCloseCircle} from 'react-icons/io';
 
-
+import { response} from '../data/answer'; 
 import { IconContext } from "react-icons";
-import { surveyInfo, surveyStatus } from '../data/question'; 
+import { surveyInfo, surveyStatus} from '../data/question'; 
 
 
 const formatDateString = (dateString) => {
@@ -14,6 +14,20 @@ const formatDateString = (dateString) => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 const SurveyList = () => {
+
+    const [responseCounts, setResponseCounts] = useState({});
+  
+    useEffect(() => {
+        // Tüm anketlerin yanıt sayısını hesapla
+        const counts = {};
+    
+        response.forEach(res => {
+          const surveyID = res.SurveyID;
+          counts[surveyID] = counts[surveyID] ? counts[surveyID] + 1 : 1;
+        });
+    
+        setResponseCounts(counts);
+      }, []); 
     return (
         <div className='container'>
          <h2 className='title'> All Surveys & Details</h2>
@@ -45,8 +59,10 @@ const SurveyList = () => {
            </div>
             </div>
         <div className='faq'>
-          {surveyInfo.map((survey) => {
-            const status = surveyStatus.find(item => item.SurveyStatusID === survey.SurveyStatusID);
+        {surveyInfo.map((survey) => {
+          const status = surveyStatus.find(item => item.SurveyStatusID === survey.SurveyStatusID);
+          const responseCount = responseCounts[survey.SurveyID] || 0;
+         
               let icon;
         if (status && status.SurveyStatus === 'Open') {
           icon = (
@@ -94,6 +110,7 @@ const SurveyList = () => {
                     <p className='subdesc'><strong>End Date:</strong> {formatDateString(survey.EndDate)}</p>
                     <p className='subdesc'><strong>Min Responses:</strong> {survey.MinResponses}</p>
                     <p className='subdesc'><strong>Max Responses:</strong> {survey.MaxResponses}</p>
+                    <p className='subdesc'><strong>Response Count:</strong> {responseCount}</p>
                   </div>
                 </label>
               </div>
