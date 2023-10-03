@@ -15,6 +15,7 @@ const Dashboard = () => {
     const [selectedResponse, setSelectedResponse] = useState(null);
     const [groupedAnswers, setGroupedAnswers] = useState(null);
     const [showSecondQuestionSelect, setShowSecondQuestionSelect] = useState(false);
+    const [isAddQuestionButtonVisible, setIsAddQuestionButtonVisible] = useState(true);
 
 const [groupedAnswersSecondQuestion, setGroupedAnswersSecondQuestion] = useState(null);
 
@@ -68,7 +69,7 @@ const [selectedSecondQuestion, setSelectedSecondQuestion] = useState(null);
 
 const handleSecondQuestionSelect = (question) => {
     setSelectedSecondQuestion(question);
-
+ setIsAddQuestionButtonVisible(false);
     const questionTypeValue = questionType.find(qt => qt.QuestionTypeID === question.QuestionTypeID)?.QuestionType;
 
     const filteredAnswers = answer.filter(
@@ -109,23 +110,33 @@ const SecondQuestionAnswers = () => {
 
     return (
         <div className="second-question-answers">
-            <h3 className="selecttitles">Cevaplar</h3>
-            <ul>
+           
+            {/* <ul>
                 {filteredAnswers.map(answer => (
                     <li key={answer.AnswerID}>{answer.Answer}</li>
                 ))}
-            </ul>
+            </ul> */}
+            <div className='chart-description'>
+                {filteredAnswers && 
+                    <p className='lengthofanswer'>
+                        Total number of responses to this question is {filteredAnswers.length}
+                    </p>
+                }
+            </div>
         </div>
     );
 };
+
 
 const SecondQuestionChart = () => {
     if (!groupedAnswersSecondQuestion) return null;
 
     return (
-        <div className="second-question-chart">
+        <div className="graph">
+        <button onClick={handleSecondQuestionPieDownload}>Download Chart</button>
+       
             <ResponsiveContainer width={800} height={400}>
-                <PieChart>
+                <PieChart ref={secondPieRef}>
                     <Pie
                         dataKey="count"
                         data={groupedAnswersSecondQuestion}
@@ -165,6 +176,7 @@ const SecondQuestionChart = () => {
                     />
                 </PieChart>
             </ResponsiveContainer>
+            
         </div>
     );
 };
@@ -178,7 +190,15 @@ const SecondQuestionChart = () => {
         }
       }, [getPiePng]);
 
+      const [getSecondPiePng, { ref: secondPieRef }] = useCurrentPng();
 
+      const handleSecondQuestionPieDownload = useCallback(async () => {
+          const png = await getSecondPiePng();
+          if (png) {
+              FileSaver.saveAs(png, "second-pie-chart.png");
+          }
+      }, [getSecondPiePng]);
+      
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 
     const RADIAN = Math.PI / 180;
@@ -332,7 +352,9 @@ const SecondQuestionChart = () => {
     </div>
     
 )}
+{isAddQuestionButtonVisible && (
 <button onClick={() => setShowSecondQuestionSelect(true)}>Add Question</button>
+)}
     </div>
 )}
 
@@ -356,12 +378,20 @@ const SecondQuestionChart = () => {
     </div>
 )}
 
+{selectedSecondQuestion !== null && (
+  <div className='allresponseframework'>
+<div className='answerswithpieframework'>
+<h3 className='selecttitles'> Responses of <a style={{color:"#7E00C2"}}> {selectedSecondQuestion.QuestionText} </a></h3>
+                     
 {showSecondQuestionChart && <SecondQuestionChart />}
 
-
 {showSecondQuestionAnswers && <SecondQuestionAnswers />}
+</div>   
+        </div>
+)}
         
         </div>
+        
     );
 };
 
