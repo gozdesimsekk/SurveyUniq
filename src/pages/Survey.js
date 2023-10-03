@@ -14,6 +14,10 @@ const Dashboard = () => {
     const [selectedQuestion, setSelectedQuestion] = useState(null);
     const [selectedResponse, setSelectedResponse] = useState(null);
     const [groupedAnswers, setGroupedAnswers] = useState(null);
+    const [showSecondQuestionSelect, setShowSecondQuestionSelect] = useState(false);
+
+const [groupedAnswersSecondQuestion, setGroupedAnswersSecondQuestion] = useState(null);
+
    const [selectedQuestionType, setSelectedQuestionType] = useState(null);
     const handleSurveySelect = (survey) => {
         setSelectedSurvey(survey);
@@ -21,6 +25,8 @@ const Dashboard = () => {
         setSelectedResponse(null);
         setGroupedAnswers(null);
     };
+    const [showSecondQuestionAnswers, setShowSecondQuestionAnswers] = useState(false);
+    const [showSecondQuestionChart, setShowSecondQuestionChart] = useState(false);
 
     const handleQuestionSelect = (question) => {
         setSelectedQuestion(question);
@@ -56,6 +62,114 @@ const Dashboard = () => {
         setSelectedResponse(null);
         
     };
+
+
+const [selectedSecondQuestion, setSelectedSecondQuestion] = useState(null);
+
+const handleSecondQuestionSelect = (question) => {
+    setSelectedSecondQuestion(question);
+
+    const questionTypeValue = questionType.find(qt => qt.QuestionTypeID === question.QuestionTypeID)?.QuestionType;
+
+    const filteredAnswers = answer.filter(
+        a => a.QuestionID === question.QuestionID &&
+            (questionTypeValue !== "Open")
+    );
+
+    if (questionTypeValue !== "Open") {
+        const grouped = {};
+        filteredAnswers.forEach(a => {
+            if (grouped[a.Answer]) {
+                grouped[a.Answer]++;
+            } else {
+                grouped[a.Answer] = 1;
+            }
+        });
+
+        const data = Object.keys(grouped).map(answer => ({
+            answer,
+            count: grouped[answer],
+        }));
+
+        setGroupedAnswersSecondQuestion(data); // ikinci soru için cevapları ayarla
+        setShowSecondQuestionChart(true); // ikinci soru seçildiğinde grafikleri göster
+    } else {
+        setGroupedAnswersSecondQuestion(null);
+    }
+
+    setSelectedQuestionType(questionTypeValue);
+    setSelectedResponse(null);
+    setShowSecondQuestionAnswers(true);
+};
+
+
+
+const SecondQuestionAnswers = () => {
+    const filteredAnswers = answer.filter(a => a.QuestionID === selectedSecondQuestion.QuestionID);
+
+    return (
+        <div className="second-question-answers">
+            <h3 className="selecttitles">Cevaplar</h3>
+            <ul>
+                {filteredAnswers.map(answer => (
+                    <li key={answer.AnswerID}>{answer.Answer}</li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+const SecondQuestionChart = () => {
+    if (!groupedAnswersSecondQuestion) return null;
+
+    return (
+        <div className="second-question-chart">
+            <ResponsiveContainer width={800} height={400}>
+                <PieChart>
+                    <Pie
+                        dataKey="count"
+                        data={groupedAnswersSecondQuestion}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={120}
+                        fill="#8884d8"
+                        label={renderPercentageLabel}
+                        labelLine={false}
+                    >
+                        {groupedAnswersSecondQuestion.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                        ))}
+                    </Pie>
+                    <Tooltip 
+                        content={({ active, payload }) => {
+                            if (active && payload && payload.length) {
+                                return (
+                                    <div style={{ backgroundColor: '#fff', border: '1px solid #ccc',borderRadius: '10px', padding: '5px' , fontSize: 12}}>
+                                        <p> {payload[0].payload.answer}</p>
+                                        <p> {payload[0].value} kişi </p>
+                                    </div>
+                                );
+                            }
+                        }}
+                    />
+                    <Legend 
+                        layout="horizontal" verticalAlign="bottom" align="center" 
+                        formatter={(value, entry) => {
+                            const { payload } = entry;
+                            return (
+                                <span style={{ color: payload.fill }}>
+                                    {payload.answer} 
+                                </span>
+                            );
+                        }}
+                    />
+                </PieChart>
+            </ResponsiveContainer>
+        </div>
+    );
+};
+
+
     const [getPiePng, { ref: pieRef }] = useCurrentPng();
      const handlePieDownload = useCallback(async () => {
         const png = await getPiePng();
@@ -141,6 +255,7 @@ const Dashboard = () => {
                 </div>
             )}
 
+
             {selectedQuestion !== null && (
                 <div className='allresponseframework'>
                     <div className='answerswithpieframework'>
@@ -211,14 +326,40 @@ const Dashboard = () => {
                 </li>
             ))}
         </ul>
+       
         <p className='lengthofanswer'> Total number of responses to this question is {answer.filter(a => a.QuestionID === selectedQuestion.QuestionID).length}</p>
+    
     </div>
     
 )}
-
+<button onClick={() => setShowSecondQuestionSelect(true)}>Add Question</button>
     </div>
 )}
 
+
+{showSecondQuestionSelect && (
+    <div className='surveyselect'>
+        <h3 className='selecttitles'>Second Question</h3>
+        <Select 
+            options={question
+                .filter(q => q.SurveyID === selectedSurvey.SurveyID)
+                .map(q => ({ value: q, label: q.QuestionText }))}
+            onChange={(selectedOption) => handleSecondQuestionSelect(selectedOption.value)} 
+            value={selectedSecondQuestion ? { value: selectedSecondQuestion, label: selectedSecondQuestion.QuestionText } : null} 
+            styles={{
+                control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderColor: state.isFocused ? 'black' : '#EEE2FC',
+                }),
+            }}
+        />
+    </div>
+)}
+
+{showSecondQuestionChart && <SecondQuestionChart />}
+
+
+{showSecondQuestionAnswers && <SecondQuestionAnswers />}
         
         </div>
     );
